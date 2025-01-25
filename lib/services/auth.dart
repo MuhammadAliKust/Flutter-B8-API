@@ -23,7 +23,7 @@ class AuthServices {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return RegisterModel.fromJson(jsonDecode(response.body));
       } else {
-        return RegisterModel();
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       throw e.toString();
@@ -42,7 +42,7 @@ class AuthServices {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return LoginModel.fromJson(jsonDecode(response.body));
       } else {
-        return LoginModel();
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       throw e.toString();
@@ -60,7 +60,7 @@ class AuthServices {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserModel.fromJson(jsonDecode(response.body));
       } else {
-        return UserModel();
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       throw e.toString();
