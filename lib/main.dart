@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_b8_api/providers/token.dart';
 import 'package:flutter_b8_api/views/login.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => TokenProvider())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:LoginView(),
+      home: LoginView(),
     );
   }
 }

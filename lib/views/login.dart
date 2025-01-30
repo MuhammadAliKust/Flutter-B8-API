@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_b8_api/providers/token.dart';
 import 'package:flutter_b8_api/services/auth.dart';
+import 'package:flutter_b8_api/views/get_all_task.dart';
 import 'package:flutter_b8_api/views/register.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({super.key});
@@ -18,6 +21,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    var tokenProvider = Provider.of<TokenProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Loginsf"),
@@ -57,6 +61,7 @@ class _LoginViewState extends State<LoginView> {
                               email: emailController.text,
                               password: pwdController.text)
                           .then((val) async {
+                        tokenProvider.setToken(val.token.toString());
                         await AuthServices()
                             .getUserProfile(val.token.toString())
                             .then((userModel) {
@@ -67,8 +72,19 @@ class _LoginViewState extends State<LoginView> {
                               builder: (context) {
                                 return AlertDialog(
                                   title: Text("Message"),
-                                  content:
-                                      Text(userModel.user!.name.toString()),
+                                  content: Text(
+                                      "User has been loggedIN Successfully"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      GetAllTaskView()));
+                                        },
+                                        child: Text("Okay"))
+                                  ],
                                 );
                               });
                         });

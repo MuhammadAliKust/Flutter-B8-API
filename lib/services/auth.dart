@@ -19,7 +19,6 @@ class AuthServices {
           headers: {'Content-Type': 'application/json'},
           body:
               jsonEncode({"name": name, "email": email, "password": password}));
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         return RegisterModel.fromJson(jsonDecode(response.body));
       } else {
@@ -74,7 +73,7 @@ class AuthServices {
       http.Response response = await http.put(
           Uri.parse("$baseUrl/users/profile"),
           headers: {'Authorization': token, 'Content-Type': 'application/json'},
-          body: {'name': name});
+          body: jsonEncode({'name': name}));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return true;
